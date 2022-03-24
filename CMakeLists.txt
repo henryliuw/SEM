@@ -67,6 +67,7 @@ add_subdirectory(deps/polyscope)
 
 set(SRCS 
   src/main.cpp
+  src/SEM.cpp
 	# add any other source files here
 )
 
