@@ -71,12 +71,18 @@ int main(int argc, char **argv) {
   }
 
   // Make sure a mesh name was given
-  /*
+  
+  std::string name;
   if (!inputFilename) {
-    std::cerr << "Please specify a mesh file as argument" << std::endl;
-    return EXIT_FAILURE;
+    name = "../input/cowhead.obj";
+    //std::cerr << "Please specify a mesh file as argument" << std::endl;
+    //return EXIT_FAILURE;
   }
-  */
+  else
+  {
+      name = args::get(inputFilename);
+  }
+  
 
   // Initialize polyscope
   polyscope::init();
@@ -85,8 +91,7 @@ int main(int argc, char **argv) {
   polyscope::state::userCallback = myCallback;
 
   // Load mesh
-  std::string name = "cowhead.obj";
-  std::tie(mesh_uptr, geometry_uptr) = readManifoldSurfaceMesh("../input/" + name);
+  std::tie(mesh_uptr, geometry_uptr) = readManifoldSurfaceMesh(name);
   mesh = mesh_uptr.release();
   geometry = geometry_uptr.release();
 
@@ -97,7 +102,11 @@ int main(int argc, char **argv) {
       polyscope::guessNiceNameFromPath("original 3D"),
       sem.ORIGINAL, mesh->getFaceVertexList(),    //geometry->inputVertexPositions
       polyscopePermutations(*mesh));
-
+  polyscope::registerSurfaceMesh(
+      polyscope::guessNiceNameFromPath("SEM parameterization"),
+      geometry->vertexPositions, mesh->getFaceVertexList(),    //geometry->inputVertexPositions
+      polyscopePermutations(*mesh));
+  polyscope::requestRedraw();
   // testing part
   //std::cout << geometry->cotanLaplacian;
   //auto L = sem.computeLaplacian();

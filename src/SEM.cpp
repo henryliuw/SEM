@@ -133,8 +133,8 @@ SparseMatrix<double> SEM::computeLaplacian() {
 			Vector3 fi = geometry->vertexPositions[i];
 			Vector3 fj = geometry->vertexPositions[j];
 			Vector3 fk = geometry->vertexPositions[k];
-			double denom = (fi.x - fk.x) * (fj.x - fk.x) + (fi.y - fk.y) * (fj.y - fk.y);
-			return denom / area_ijk / 4; // outer half is also divided here
+			double nume = (fi.x - fk.x) * (fj.x - fk.x) + (fi.y - fk.y) * (fj.y - fk.y);
+			return nume / area_ijk / 4; // outer half is also divided here
 		}
 		else return .0;
 	};
