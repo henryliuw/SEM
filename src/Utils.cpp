@@ -1,0 +1,1 @@
+// this is a util function that write things to a obj file
